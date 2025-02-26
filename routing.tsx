@@ -1,17 +1,28 @@
-import React from 'react'
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "./src/components/Layout";
 
-const HomePage = () => <h1>Startsida</h1>; 
-const AdminPage = () => <h1>Admin</h1>; 
-const LoginPage = () => <h1>Logga in</h1>; 
-const ErrorPage = () => <h1>Sidan existerar inte..</h1>;
+import HomePage from "./src/pages/HomePage"
+import AdminPage from "./src/pages/AdminPage"
+import LoginPage from "./src/pages/LoginPage"
+
+
+//Autentisiering
+/*const authenticateUser = async () => {
+    const token = localStorage.getItem('token');
+ 
+    if(!token) {
+        return redirect('/login');
+    }
+    return null;
+};*/
+
+
 
 //Konfigurera routes
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Layout />,
+        element: <Layout />,    /*Övergripande komponent*/
         children: [
 
             {
@@ -20,20 +31,20 @@ const router = createBrowserRouter([
             },
             {
                 path:"/admin",
-                element: <AdminPage />
+                element: <AdminPage />,
+                //loader: authenticateUser
             },
             {
                 path:"/login",
                 element: <LoginPage />
             },
             {    path: "*",    
-                element: <ErrorPage />  }
+                element: <ErrorPage />  
+            }
 
         ]
     },
 
-
-
-])
+]);
 
 export default router;

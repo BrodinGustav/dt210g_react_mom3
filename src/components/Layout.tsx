@@ -1,14 +1,16 @@
 
 import Header from "./Header"
-import { Outlet } from "react-router-dom"
+import { Outlet } from "react-router-dom"   //Används för att rendera barnkomponenter
 
 const Layout = () => {
     return (
         <>
+        <div>
             <Header />
-
+            </div>
+            
             <main>
-                 <Outlet />
+                 <Outlet />                 {/*Renderar barnkomponenter*/}
             </main>
 
             <footer>Sidfoten</footer>

@@ -23,7 +23,7 @@ const LoginPage = () => {
 
             </div>
 
-                //Formulär med eventlyssnare
+            
             <form onSubmit={handleSubmit}>
                 {error && (
                     <div className="error-message">
