@@ -1,6 +1,6 @@
 import React from 'react'
 import { createBrowserRouter } from "react-router-dom";
-import Layout from "./Components/Layout";
+import Layout from "./src/components/Layout";
 
 const HomePage = () => <h1>Startsida</h1>; 
 const AdminPage = () => <h1>Admin</h1>; 
