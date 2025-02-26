@@ -1,11 +1,11 @@
 //Strukturerar data för användare i backend
 export interface User {
     id: string,
-    userName: string;
+    username: string;
 }
 
 //Interface om data som skickas till backend
-export interface LoginCredentiels {
+export interface LoginCredentials {
     userName: string,
     password: string
 }
@@ -19,6 +19,7 @@ export interface AuthResponse {
 //Definierar context-filen (vilka states,metoder den ska innehålla)
 export interface AuthContextType {
     user: User | null //Om användare inte finns blir det null
-    login: (credentials: LoginCredentiels) => Promise<void>;    //Görs asynkron
+    login: (credentials: LoginCredentials) => Promise<void>;    //Görs asynkron
     logout: () => void;     //Rensar localStorage (User och token). Görs i klientsidan.
 }
+
