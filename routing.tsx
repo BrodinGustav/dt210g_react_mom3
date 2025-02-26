@@ -1,20 +1,21 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, redirect } from "react-router-dom";
 import Layout from "./src/components/Layout";
 
 import HomePage from "./src/pages/HomePage"
 import AdminPage from "./src/pages/AdminPage"
 import LoginPage from "./src/pages/LoginPage"
+import ErrorPage from "./src/pages/ErrorPage"
 
 
 //Autentisiering
-/*const authenticateUser = async () => {
+const authenticateUser = async () => {
     const token = localStorage.getItem('token');
  
     if(!token) {
         return redirect('/login');
     }
     return null;
-};*/
+};
 
 
 
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
             {
                 path:"/admin",
                 element: <AdminPage />,
-                //loader: authenticateUser
+                loader: authenticateUser
             },
             {
                 path:"/login",
