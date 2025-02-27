@@ -2,21 +2,21 @@ import { createContext, useState, useContext, ReactNode } from "react";;
 import { User, LoginCredentials, AuthResponse, AuthContextType } from "../types/auth.types";
 
 //Skapa context
-const AuthContext = createContext <AuthContextType | null >(null);
+const AuthContext = createContext<AuthContextType | null>(null);
 
 
 interface AuthProviderProps {
     children: ReactNode
-} 
+}
 
 //Provider (lagrar vad contexten innehåller. Lagrar också vad som ska skickas ut till komponenter som använder context-filen)
-export const AuthProvider: React.FC<AuthProviderProps> = ( {children }) => {    //Returnerar en React FC, tar emot children som är React Nodes
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {    //Returnerar en React FC, tar emot children som är React Nodes
 
     //State för användare
     const [user, setUser] = useState<User | null>(null);    //Använder interface User
 
     //Ajaxanrop för inlog
-    const login = async (credentials: LoginCredentials) => { 
+    const login = async (credentials: LoginCredentials) => {
 
         try {
             const res = await fetch("http://localhost:5000/api/auth/login/", {  //Om ok inlogg genereras token som skickas till klienten
@@ -25,20 +25,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ( {children }) => {    
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(credentials)
-            })    
+            })
 
-            if(!res.ok) throw new Error("Inloggning misslyckades.");
+            if (!res.ok) throw new Error("Inloggning misslyckades.");
 
             //Konverterar till JS
             const data = await res.json() as AuthResponse;
+
+            // Loggar användaren och token
+            console.log("User:", data.user);
+            console.log("Token:", data.token);
 
             //Lagrar i localStorage
             localStorage.setItem("token", data.token);
 
             //Lagra info om användare 
             setUser(data.user);
-
-        } catch(error) {
+            
+        } catch (error) {
             throw error;
         }
 
@@ -53,7 +57,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ( {children }) => {    
 
     //Koppla ihop AuthContext med AuthProvider och returnera tillbaka
     return (
-        <AuthContext.Provider value= {{user, login, logout}}>
+        <AuthContext.Provider value={{ user, login, logout }}>
 
             {/*Rendera komponenten som använder providen*/}
             {children}
@@ -62,10 +66,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ( {children }) => {    
     )
 }
 
-export const useAuth = () : AuthContextType => {
+export const useAuth = (): AuthContextType => {
     const context = useContext(AuthContext);
 
-    if(!context) {
+    if (!context) {
         throw new Error("useAuth måste användas inom en AuthProvider");
     }
 

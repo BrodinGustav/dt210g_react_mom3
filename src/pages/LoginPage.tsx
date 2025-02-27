@@ -1,5 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
 
@@ -8,11 +10,23 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
+    const {login} = useAuth();
+    const navigate = useNavigate();
+
     //Nollställer error-state och förhindrar sidan från att laddas om
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError('');
 
+        try{
+
+            await login({email, password}); 
+            console.log("Token:", localStorage.getItem("token"));
+            navigate("/admin");
+
+        } catch(error) {
+            setError("Inloggninge misslyckades, kontrollera email och lösenord.");
+        }
     };
 
 

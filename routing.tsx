@@ -1,4 +1,4 @@
-import { createBrowserRouter, redirect } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import Layout from "./src/components/Layout";
 
 import HomePage from "./src/pages/HomePage"
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
                 path:"/admin",
                 element: (
                     <ProtectedRoute>
-                <AdminPage />,
+                <AdminPage />
                 </ProtectedRoute>
                 )
             },

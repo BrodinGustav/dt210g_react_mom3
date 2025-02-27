@@ -1,12 +1,12 @@
 //Strukturerar data för användare i backend
 export interface User {
     id: string,
-    username: string;
+    email: string;
 }
 
 //Interface om data som skickas till backend
 export interface LoginCredentials {
-    userName: string,
+    email: string,
     password: string
 }
 
