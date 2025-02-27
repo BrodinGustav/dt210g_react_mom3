@@ -5,17 +5,8 @@ import HomePage from "./src/pages/HomePage"
 import AdminPage from "./src/pages/AdminPage"
 import LoginPage from "./src/pages/LoginPage"
 import ErrorPage from "./src/pages/ErrorPage"
+import ProtectedRoute from "./src/components/ProtectedRoute";
 
-
-//Autentisiering
-const authenticateUser = async () => {
-    const token = localStorage.getItem('token');
- 
-    if(!token) {
-        return redirect('/login');
-    }
-    return null;
-};
 
 
 
@@ -32,8 +23,11 @@ const router = createBrowserRouter([
             },
             {
                 path:"/admin",
-                element: <AdminPage />,
-                loader: authenticateUser
+                element: (
+                    <ProtectedRoute>
+                <AdminPage />,
+                </ProtectedRoute>
+                )
             },
             {
                 path:"/login",
