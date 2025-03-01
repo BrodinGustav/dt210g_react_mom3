@@ -1,9 +1,37 @@
+import { useEffect, useState } from "react";
+import { fetchPost } from "../context/PublicContext";
+import { BloggPost } from "../types/public.types";
 
 const HomePage = () => {
+
+    const [posts, setPosts] = useState<BloggPost[]>([]);        //Lagrar data med useState
+
+    useEffect(() => {                                           //Laddar in data från backend vid start av sida med useEffect
+        const getPosts = async () => {
+            const data = await fetchPost();
+            setPosts(data);
+        };
+
+        getPosts();
+    }, []);
+
+
+
     return (
         <div>
-            <h1>Startsida</h1>
+            <h1>Välkommen till bloggen!</h1>
+            <h2>Senaste inläggen</h2>
+
+            <ul>
+                {posts.map((post, index) => (
+                    <li key={index}>
+                        <h3>{post.title}</h3>
+                        <p>{post.description}</p>
+                    </li>
+                ))}
+            </ul>
         </div>
-    )
-    }
+    );
+};
+
 export default HomePage
