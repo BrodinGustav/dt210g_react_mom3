@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from 'react-router-dom';
 
@@ -11,9 +11,15 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
-    const {login} = useAuth();
+    const {login, user} = useAuth();
     const navigate = useNavigate();
 
+    //Kontrollerar användare
+    useEffect(() => {
+        if(user) {
+            navigate("/admin");
+        }
+    }, [])
 
 
     //Nollställer error-state och förhindrar sidan från att laddas om
@@ -26,7 +32,7 @@ const LoginPage = () => {
             await login({email, password}); 
             console.log("Token:", localStorage.getItem("token"));
 
-            console.log("Inloggning lyckades" + email);
+            console.log("Inloggning lyckades" + email, user);
 
             navigate("/admin");
 

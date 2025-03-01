@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, ReactNode } from "react";;
+import { createContext, useState, useContext, ReactNode, useEffect } from "react";;
 import { User, LoginCredentials, AuthResponse, AuthContextType } from "../types/auth.types";
 
 //Skapa context
@@ -19,7 +19,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {    
 
 
 
-    //Ajaxanrop för inlog
+    //Inlogg
     const login = async (credentials: LoginCredentials) => {
 
         console.log("Current user:", user);
@@ -38,11 +38,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {    
             //Konverterar till JS
             const data = await res.json() as AuthResponse;
 
-            // Loggar användaren och token
-            console.log("User:", data.user);
-            console.log("Token:", data.token);
-
-            //Lagrar i localStorage
+                  //Lagrar i localStorage
             localStorage.setItem("token", data.token);
 
             console.log("User:", data.user);
@@ -63,6 +59,40 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {    
 
         setUser(null);
     }
+
+
+    //Validera token
+    const checkToken = async () => {
+        const token = localStorage.getItem("token");
+
+        if(!token) {
+        return;
+    }
+
+    try {
+        
+        const res = await fetch("http://localhost:5000/api/auth/validate", {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        if(res.ok) {
+            const data = await res.json();
+            setUser(data.user);
+        }
+    }catch(error) {
+        console.error("Fel vid tokenvalidering:", error);
+        localStorage.removeItem("token");
+        setUser(null);
+    }
+}
+
+    useEffect(() => {
+        checkToken();
+    }, [])
 
     //Koppla ihop AuthContext med AuthProvider och returnera tillbaka
     return (
@@ -86,4 +116,3 @@ export const useAuth = (): AuthContextType => {
 }
 
 
-//Fortsättning 29.57 i https://mallarmiun.github.io/Fordjupad-frontend-utveckling/moment-3/moment3_teori#router
