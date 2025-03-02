@@ -38,7 +38,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {    
             //Konverterar till JS
             const data = await res.json() as AuthResponse;
 
-                  //Lagrar i localStorage
+            //Lagrar i localStorage
             localStorage.setItem("token", data.token);
 
             console.log("User:", data.user);
@@ -65,30 +65,30 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {    
     const checkToken = async () => {
         const token = localStorage.getItem("token");
 
-        if(!token) {
-        return;
-    }
-
-    try {
-        
-        const res = await fetch("http://localhost:5000/api/auth/validate", {
-            method: "GET",
-            headers: {
-                "Content-type": "application/json",
-                "Authorization": "Bearer " + token
-            }
-        });
-
-        if(res.ok) {
-            const data = await res.json();
-            setUser(data.user);
+        if (!token) {
+            return;
         }
-    }catch(error) {
-        console.error("Fel vid tokenvalidering:", error);
-        localStorage.removeItem("token");
-        setUser(null);
+
+        try {
+
+            const res = await fetch("http://localhost:5000/api/auth/validate", {
+                method: "GET",
+                headers: {
+                    "Content-type": "application/json",
+                    "Authorization": "Bearer " + token
+                }
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                setUser(data.user);
+            }
+        } catch (error) {
+            console.error("Fel vid tokenvalidering:", error);
+            localStorage.removeItem("token");
+            setUser(null);
+        }
     }
-}
 
     useEffect(() => {
         checkToken();
@@ -96,7 +96,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {    
 
     //Koppla ihop AuthContext med AuthProvider och returnera tillbaka
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ user, login, logout, createPost, updatePost, deletePost }}>
 
             {/*Rendera komponenten som använder providen*/}
             {children}
@@ -114,5 +114,81 @@ export const useAuth = (): AuthContextType => {
 
     return context;
 }
+
+
+//Skapa blogginlägg
+const createPost = async (postData: { title: string, description: string }) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        throw new Error("Ingen token hittades, användaren är inte inloggad.");
+    }
+
+    const response = await fetch("http://localhost:5000/api/Blogg", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer $(token)`
+        },
+        body: JSON.stringify(postData)
+    });
+    if (!response.ok) {
+        throw new Error("Fel vid skapande av inlägg.");
+    }
+
+    return response.json();
+};
+
+
+
+//Hämta blogginlägg
+
+
+//Uppdatera blogginlägg
+const updatePost = async (postId: string, updatedData: { title?: string; description?: string }) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        throw new Error("Ingen token hittades, användaren är inte inloggad.");
+    }
+
+    const response = await fetch(`http://localhost:5000/api/Blogg/${postId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer $(token)`
+        },
+        body: JSON.stringify(updatedData)
+    });
+    if (!response.ok) {
+        throw new Error("Fel vid uppdatering av inlägg.");
+    }
+
+    return response.json();
+};
+
+
+//Radera blogginlägg
+const deletePost = async (postId: string) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        throw new Error("Ingen token hittades, användaren är inte inloggad.");
+    }
+
+    const response = await fetch(`http://localhost:5000/api/Blogg/${postId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer $(token)`
+        },
+    });
+    if (!response.ok) {
+        throw new Error("Fel vid radering av inlägg.");
+    }
+
+    return response.json();
+};
+
 
 
