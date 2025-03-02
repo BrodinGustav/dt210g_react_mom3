@@ -33,6 +33,10 @@ const AdminPage = () => {
     const [updateTitle, setUpdateTitle] = useState("");
     const [updateDescription, setUpdateDescription] = useState("");
 
+    //State för att lagra delete inputvärde (id)
+    const [postDeleteId, setPostDeleteId] = useState("");
+
+
     //Skapa inlägg
     const handleCreatePost = async () => {
         try {
@@ -72,6 +76,12 @@ const AdminPage = () => {
     };
 
 
+    //Metod för att generera unikt, ensiffrigt ID
+    const generateShortId = (id: string) => id.slice(0, 2);  //Skriver ut de först 2 tecken från backend-ID
+
+
+
+
     return (
         <>
             <h1>Adminpanel</h1>
@@ -96,7 +106,7 @@ const AdminPage = () => {
 
             <div>
                 <h3>Radera inlägg</h3>
-                <input type="text" placeholder="Inläggs-ID" value={postId} onChange={(e) => setPostId(e.target.value)} />
+                <input type="text" placeholder="Inläggs-ID" value={postDeleteId} onChange={(e) => setPostDeleteId(e.target.value)} />
                 <button onClick={handleDeletePost}>Radera</button>
             </div>
 
@@ -104,10 +114,10 @@ const AdminPage = () => {
                 <h3>Blogginlägg</h3>
 
                 <ul>
-                    {posts.map((post, index) => (
-                        <li key={post.id}>
+                    {posts.map((post) => (
+                        <li key={post._id}>
                             <h3>{post.title}</h3>
-                            <p>ID: {post.id}</p>
+                            <p>ID: {generateShortId(post._id)}</p>
                             <p>{post.description}</p>
                         </li>
                     ))}
