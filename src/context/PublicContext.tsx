@@ -16,11 +16,13 @@ export const fetchPost = async () => {
         //Konverterar till JS. Konverterar til array
         const data = await res.json() as BloggPost[];
 
-        console.log("Hämtade bloggposter:", data);
         return data;
 
     } catch (error) {
         console.error("Fel vid hämtning av blogginlägg:", error);
         return [];
     }
+
 }
+
+

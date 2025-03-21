@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, ReactNode, useEffect } from "react";;
 import { User, LoginCredentials, AuthResponse, AuthContextType } from "../types/auth.types";
+import { createPost, updatePost, deletePost } from "../services/blogService";
 
 //Skapa context
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -14,15 +15,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {    
 
     //State för användare
     const [user, setUser] = useState<User | null>(null);    //Använder interface User
+    const [token, setToken] = useState(localStorage.getItem("token") || "");
 
-    console.log("Current user:", user);
 
+    //Uppdaterar token i localStorage vid förändring
+    useEffect(() => {
+        if (token) {
+            localStorage.setItem("token", token);
+        } else {
+            localStorage.removeItem("token");
+        }
+    }, [token]);
 
 
     //Inlogg
     const login = async (credentials: LoginCredentials) => {
-
-        console.log("Current user:", user);
 
         try {
             const res = await fetch("http://localhost:5000/api/auth/login/", {  //Om ok inlogg genereras token som skickas till klienten
@@ -46,6 +53,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {    
 
             //Lagra info om användare 
             setUser(data.user);
+            setToken(data.token);
 
         } catch (error) {
             throw error;
@@ -71,10 +79,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {    
 
         try {
 
-            const res = await fetch("http://localhost:5000/api/auth/validate", {
+            const res = await fetch("http://localhost:5000/api/validate", {
                 method: "GET",
                 headers: {
-                    "Content-type": "application/json",
+                    "Content-Type": "application/json",
                     "Authorization": "Bearer " + token
                 }
             });
@@ -82,7 +90,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {    
             if (res.ok) {
                 const data = await res.json();
                 setUser(data.user);
+
+            } else {
+              //  logout();
             }
+
         } catch (error) {
             console.error("Fel vid tokenvalidering:", error);
             localStorage.removeItem("token");
@@ -90,9 +102,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {    
         }
     }
 
+    //Validerar token vid start och vid token-ändring
     useEffect(() => {
         checkToken();
-    }, [])
+    }, [token]);
 
     //Koppla ihop AuthContext med AuthProvider och returnera tillbaka
     return (
@@ -114,81 +127,4 @@ export const useAuth = (): AuthContextType => {
 
     return context;
 }
-
-
-//Skapa blogginlägg
-const createPost = async (postData: { title: string, description: string }) => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-        throw new Error("Ingen token hittades, användaren är inte inloggad.");
-    }
-
-    const response = await fetch("http://localhost:5000/api/Blogg", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer $(token)`
-        },
-        body: JSON.stringify(postData)
-    });
-    if (!response.ok) {
-        throw new Error("Fel vid skapande av inlägg.");
-    }
-
-    return response.json();
-};
-
-
-
-//Hämta blogginlägg
-
-
-//Uppdatera blogginlägg
-const updatePost = async (postId: string, updatedData: { title?: string; description?: string }) => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-        throw new Error("Ingen token hittades, användaren är inte inloggad.");
-    }
-
-    const response = await fetch(`http://localhost:5000/api/Blogg/${postId}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer $(token)`
-        },
-        body: JSON.stringify(updatedData)
-    });
-    if (!response.ok) {
-        throw new Error("Fel vid uppdatering av inlägg.");
-    }
-
-    return response.json();
-};
-
-
-//Radera blogginlägg
-const deletePost = async (postId: string) => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-        throw new Error("Ingen token hittades, användaren är inte inloggad.");
-    }
-
-    const response = await fetch(`http://localhost:5000/api/Blogg/${postId}`, {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer $(token)`
-        },
-    });
-    if (!response.ok) {
-        throw new Error("Fel vid radering av inlägg.");
-    }
-
-    return response.json();
-};
-
-
 

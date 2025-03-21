@@ -25,7 +25,7 @@ export interface AuthContextType {
 
      //Metoder för att hantera blogginlägg
      createPost: (postData: { title: string; description: string }) => Promise<any>;
-     updatePost: (postId: string, updatedData: { title?: string; description?: string }) => Promise<any>;
+     updatePost: (postId: string, updatedData: { title?: string; description?: string }) => Promise<any>; 
      deletePost: (postId: string) => Promise<any>;
  }
 

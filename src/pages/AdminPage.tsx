@@ -11,15 +11,15 @@ const AdminPage = () => {
     //Hämtar blogginlägg från server
     const [posts, setPosts] = useState<BloggPost[]>([]);        //Lagrar data med useState
 
-                        
-        //Deklararerar getPosts utanför useEffect för att kunna anropa den efter varje CRUD (för att uppdatera lista på fronten)
-        const getPosts = async () => {
-            const data = await fetchPost();
-            setPosts(data);
-        };
 
-        //Laddar in data från backend vid start av sida med useEffect
-        useEffect(() => {
+    //Deklararerar getPosts utanför useEffect för att kunna anropa den efter varje CRUD (för att uppdatera lista på fronten)
+    const getPosts = async () => {
+        const data = await fetchPost();
+        setPosts(data);
+    };
+
+    //Laddar in data från backend vid start av sida med useEffect
+    useEffect(() => {
         getPosts();
     }, []);
 
@@ -42,9 +42,9 @@ const AdminPage = () => {
         try {
             const newPost = await createPost({ title, description });
             console.log("Inlägg skapat:", newPost);
-            
+
             //Uppdatera listan
-            getPosts(); 
+            getPosts();
 
         } catch (error) {
             console.error("Fel vid skapande av inlägg:", error);
@@ -54,12 +54,21 @@ const AdminPage = () => {
     //Uppdatera inlägg
     const handleUpdatePost = async () => {
         try {
-            const updatedPost = await updatePost(postId, { title: updateTitle, description: updateDescription });
+            //Hitta fullständiga ID:t baserat på det kortare ID:t (från inputfältet)
+            const postToUpdate = posts.find(post => generateShortId(post._id) === postId);
+
+            if (!postToUpdate) {
+                console.error("Inget inlägg hittades med detta ID");
+                return;
+            }
+
+                 //Skickar fullständifr ID med PUT
+            const updatedPost = await updatePost(postToUpdate._id, { title, description });
             console.log("Inlägg uppdaterat:", updatedPost);
 
             //Uppdatera listan
-            getPosts(); 
-           
+            getPosts();
+
         } catch (error) {
             console.error("Fel vid uppdatering av inlägg:", error);
         }
@@ -77,7 +86,7 @@ const AdminPage = () => {
 
 
     //Metod för att generera unikt, ensiffrigt ID
-    const generateShortId = (id: string) => id.slice(0, 2);  //Skriver ut de först 2 tecken från backend-ID
+    const generateShortId = (id: string) => id.slice(0, 4);  //Skriver ut de först 2 tecken från backend-ID
 
 
 
@@ -87,8 +96,7 @@ const AdminPage = () => {
             <h1>Adminpanel</h1>
             <h2>Välkommen {user ? user.firstName : "Admin"}</h2>
 
-
-
+     
             <div>
                 <h3>Skapa inlägg</h3>
                 <input type="text" placeholder="Titel" value={title} onChange={(e) => setTitle(e.target.value)} />

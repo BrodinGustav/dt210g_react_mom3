@@ -30,9 +30,7 @@ const LoginPage = () => {
         try{
 
             await login({email, password}); 
-            console.log("Token:", localStorage.getItem("token"));
-
-            console.log("Inloggning lyckades" + email, user);
+            localStorage.getItem("token");
 
             navigate("/admin");
 
