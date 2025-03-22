@@ -65,7 +65,7 @@ const AdminPage = () => {
             //debugg
             console.log("Data som skickas i PUT:", { title: updateTitle, description: updateDescription });
 
-                 //Skickar fullständifr ID med PUT
+            //Skickar fullständifr ID med PUT
             const updatedPost = await updatePost(postToUpdate._id, { title: updateTitle, description: updateDescription });
             console.log("Inlägg uppdaterat:", updatedPost);
 
@@ -80,8 +80,33 @@ const AdminPage = () => {
     //Radera inlägg
     const handleDeletePost = async () => {
         try {
-            await deletePost(postId);
-            console.log("Inlägg raderat:", postId);
+
+             
+            console.log("Alla inläggs-ID:", posts.map(post => post._id));
+            console.log("Alla korta ID:", posts.map(post => generateShortId(post._id)));
+            console.log("ID som letas efter:", postDeleteId);
+
+
+            //Hitta fullständiga ID:t baserat på det kortare ID:t (från inputfältet)
+            const postToDelete = posts.find(post => generateShortId(post._id) === postDeleteId);
+
+            if (!postToDelete) {
+                console.error("Inlägg ej hittat, kan ej radera.");
+                return;
+            }
+
+            //debugg
+            console.log("ID som skickas för radering:", postToDelete);
+
+            //Skickar fullständifr ID med PUT
+            const deletedPost = await deletePost(postToDelete._id);
+            console.log("Inlägg uppdaterat:", deletedPost);
+
+            //Uppdatera listan
+            getPosts();
+
+            //debugg
+            console.log("Inlägg raderat:", postDeleteId);
         } catch (error) {
             console.error("Fel vid radering av inlägg:", error);
         }
@@ -99,7 +124,7 @@ const AdminPage = () => {
             <h1>Adminpanel</h1>
             <h2>Välkommen {user ? user.firstName : "Admin"}</h2>
 
-     
+
             <div>
                 <h3>Skapa inlägg</h3>
                 <input type="text" placeholder="Titel" value={title} onChange={(e) => setTitle(e.target.value)} />

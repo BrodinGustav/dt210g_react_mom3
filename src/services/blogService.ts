@@ -45,6 +45,7 @@ export const deletePost = async (postId: string) => {
         throw new Error("Fel vid radering av inlägg.");
     }
 
+    console.log("ID som skickas:", postId);
     return response.json();
 };
 
