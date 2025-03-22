@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { fetchPost } from "../context/PublicContext";
 import { BloggPost } from "../types/public.types";
-
+import '../app.css'
 const AdminPage = () => {
 
     const { createPost, updatePost, deletePost, user } = useAuth();
@@ -152,9 +152,11 @@ const AdminPage = () => {
                 <ul>
                     {posts.map((post) => (
                         <li key={post._id}>
-                            <h3>{post.title}</h3>
+                            <h3>Title: {post.title}</h3>
                             <p>ID: {generateShortId(post._id)}</p>
                             <p>{post.description}</p>
+                            <p><strong>Författare:</strong> {post.author?.firstName || "Okänd"}</p>
+                            <p>Skapad: {post.createdAt}</p>
                         </li>
                     ))}
                 </ul>

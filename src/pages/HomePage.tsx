@@ -25,8 +25,10 @@ const HomePage = () => {
             <ul>
                 {posts.map((post, index) => (
                     <li key={index}>
-                        <h3>{post.title}</h3>
+                        <h3>Titel: {post.title}</h3>
                         <p>{post.description}</p>
+                        <p><strong>Författare:</strong> {post.author?.firstName || "Okänd"}</p>
+                        <p>Skapad: {post.createdAt}</p>
                     </li>
                 ))}
             </ul>

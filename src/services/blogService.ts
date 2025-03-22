@@ -1,6 +1,6 @@
 
 //Skapa blogginlägg
-export const createPost = async (postData: { title: string, description: string }) => {
+export const createPost = async (postData: { title: string, description: string}) => { 
     const token = localStorage.getItem("token");
 
     if (!token) {
