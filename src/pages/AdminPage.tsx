@@ -3,6 +3,8 @@ import { useAuth } from "../context/AuthContext";
 import { fetchPost } from "../context/PublicContext";
 import { BloggPost } from "../types/public.types";
 import '../app.css'
+import { Link } from 'react-router-dom';
+
 const AdminPage = () => {
 
     const { createPost, updatePost, deletePost, user } = useAuth();
@@ -157,6 +159,9 @@ const AdminPage = () => {
                             <p>{post.description}</p>
                             <p><strong>Författare:</strong> {post.author?.firstName || "Okänd"}</p>
                             <p>Skapad: {post.createdAt}</p>
+                            <Link to={`/blogg/${post._id}`}>
+                            <button>Visa detaljer</button>
+                            </Link>
                         </li>
                     ))}
                 </ul>

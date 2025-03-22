@@ -6,6 +6,7 @@ import AdminPage from "./src/pages/AdminPage"
 import LoginPage from "./src/pages/LoginPage"
 import ErrorPage from "./src/pages/ErrorPage"
 import ProtectedRoute from "./src/components/ProtectedRoute";
+import BlogPostDetail from "./src/components/BloggPostDetail";
 
 
 
@@ -35,6 +36,9 @@ const router = createBrowserRouter([
             },
             {    path: "*",    
                 element: <ErrorPage />  
+            },
+            {    path: "//blogg/:id",    
+                element: <BlogPostDetail />  
             }
 
         ]
