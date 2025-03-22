@@ -62,8 +62,11 @@ const AdminPage = () => {
                 return;
             }
 
+            //debugg
+            console.log("Data som skickas i PUT:", { title: updateTitle, description: updateDescription });
+
                  //Skickar fullständifr ID med PUT
-            const updatedPost = await updatePost(postToUpdate._id, { title, description });
+            const updatedPost = await updatePost(postToUpdate._id, { title: updateTitle, description: updateDescription });
             console.log("Inlägg uppdaterat:", updatedPost);
 
             //Uppdatera listan
