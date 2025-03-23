@@ -2,8 +2,8 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from 'react-router-dom';
-import '../app.css'
-import '../index.css'
+import '../../src/App.css'
+import '../../src/index.css'
 const LoginPage = () => {
 
     //States för inputfält och error

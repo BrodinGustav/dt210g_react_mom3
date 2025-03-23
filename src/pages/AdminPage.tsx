@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { fetchPost } from "../context/PublicContext";
 import { BloggPost } from "../types/public.types";
-import '../app.css'
+import '../../src/App.css'
 import { Link } from 'react-router-dom';
 
 const AdminPage = () => {
