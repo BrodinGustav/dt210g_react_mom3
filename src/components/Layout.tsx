@@ -1,8 +1,6 @@
 
 import Header from "./Header"
 import { Outlet } from "react-router-dom"   //Används för att rendera barnkomponenter
-import '../app.css'
-import '../index.css'
 
 const Layout = () => {
     return (
