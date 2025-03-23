@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';           //Hämtar dynamiska parametern från URL:en, ex id
 import { BloggPost } from '../types/public.types';
 
