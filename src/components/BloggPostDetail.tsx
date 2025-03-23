@@ -6,9 +6,6 @@ import { BloggPost } from '../types/public.types';
 const BlogPostDetail = () => {
     const { id } = useParams();                         //Hämtar ID från URL
 
-    //debugg
-    console.log("Hämtat id från URL:", id);
-
 
     const [blogPost, setBlogPost] = useState<BloggPost | null>(null);
     const [loading, setLoading] = useState(true);
@@ -34,9 +31,6 @@ const BlogPostDetail = () => {
 
                 if (response.ok) {
                     const data: BloggPost = await response.json();
-
-                    //debugg
-                    console.log("Hämtad bloggpost:", data); 
 
                     setBlogPost(data);
                 

@@ -27,9 +27,6 @@ export const createPost = async (postData: { title: string, description: string}
 export const deletePost = async (postId: string) => {
     const token = localStorage.getItem("token");
 
-    //debugg
-    console.log("Token vid PUT/DELETE:", token);
-
     if (!token) {
         throw new Error("Ingen token hittades, användaren är inte inloggad.");
     }
@@ -45,7 +42,6 @@ export const deletePost = async (postId: string) => {
         throw new Error("Fel vid radering av inlägg.");
     }
 
-    console.log("ID som skickas:", postId);
     return response.json();
 };
 
@@ -53,9 +49,6 @@ export const deletePost = async (postId: string) => {
 export const updatePost = async (id: string, updatedPostData: { title?: string; description?: string }) => {
 
     const token = localStorage.getItem("token");
-
-    //debugg
-    console.log("Token vid PUT/DELETE:", token);
 
     if (!token) {
         throw new Error("Ingen token hittades, användaren är inte inloggad.");
@@ -74,7 +67,6 @@ export const updatePost = async (id: string, updatedPostData: { title?: string; 
         throw new Error("Fel vid uppdatering av inlägg.");
     }
 
-    console.log("ID som skickas:", id);
     return response.json();
 };
 

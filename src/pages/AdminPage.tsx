@@ -134,10 +134,6 @@ const AdminPage = () => {
                 return;
             }
 
-
-            //debugg
-            console.log("Data som skickas i PUT:", { title: updateTitle, description: updateDescription });
-
             try {
 
                 //Skickar fullständifr ID med PUT
@@ -172,11 +168,6 @@ const AdminPage = () => {
 
         if (valid) {
 
-                console.log("Alla inläggs-ID:", posts.map(post => post._id));
-                console.log("Alla korta ID:", posts.map(post => generateShortId(post._id)));
-                console.log("ID som letas efter:", postDeleteId);
-
-
                 //Hitta fullständiga ID:t baserat på det kortare ID:t (från inputfältet)
                 const postToDelete = posts.find(post => generateShortId(post._id) === postDeleteId);
 
@@ -185,9 +176,6 @@ const AdminPage = () => {
                     return;
                 }
 
-
-                //debugg
-                console.log("ID som skickas för radering:", postToDelete);
 
                 try {
 
@@ -198,8 +186,7 @@ const AdminPage = () => {
                 //Uppdatera listan
                 getPosts();
 
-                //debugg
-                console.log("Inlägg raderat:", postDeleteId);
+
             } catch (error) {
                 console.error("Fel vid radering av inlägg:", error);
             }

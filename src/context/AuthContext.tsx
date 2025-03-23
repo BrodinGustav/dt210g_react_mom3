@@ -48,9 +48,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {    
             //Lagrar i localStorage
             localStorage.setItem("token", data.token);
 
-            console.log("User:", data.user);
-            console.log("Token:", data.token);
-
             //Lagra info om användare 
             setUser(data.user);
             setToken(data.token);
