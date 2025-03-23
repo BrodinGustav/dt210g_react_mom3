@@ -7,7 +7,7 @@ export const createPost = async (postData: { title: string, description: string}
         throw new Error("Ingen token hittades, användaren är inte inloggad.");
     }
 
-    const response = await fetch("http://localhost:5000/api/blogg", {
+    const response = await fetch("https://dt210g-mom3-backend-1.onrender.com/api/blogg", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -34,7 +34,7 @@ export const deletePost = async (postId: string) => {
         throw new Error("Ingen token hittades, användaren är inte inloggad.");
     }
 
-    const response = await fetch(`http://localhost:5000/api/blogg/${postId}`, {
+    const response = await fetch(`https://dt210g-mom3-backend-1.onrender.com/api/blogg/${postId}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -62,7 +62,7 @@ export const updatePost = async (id: string, updatedPostData: { title?: string; 
     }
 
 
-    const response = await fetch(`http://localhost:5000/api/blogg/${id}`, {
+    const response = await fetch(`https://dt210g-mom3-backend-1.onrender.com/api/blogg/${id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",

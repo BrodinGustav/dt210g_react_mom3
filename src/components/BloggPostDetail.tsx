@@ -24,7 +24,7 @@ const BlogPostDetail = () => {
                     return;
                 }
 
-                const response = await fetch(`http://localhost:5000/api/blogg/${id}`, {
+                const response = await fetch(`https://dt210g-mom3-backend-1.onrender.com/api/blogg/${id}`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`, // Skicka token här
