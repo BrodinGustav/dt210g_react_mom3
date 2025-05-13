@@ -9,8 +9,9 @@ const Header = () => {
         <header>
             <nav>
                 <ul>
+                    <li><NavLink to="/">Startsida</NavLink></li>
                     <li>
-                        {
+                        { 
                             !user ?  <NavLink to="/login">Logga in</NavLink> : <button onClick={logout}>Logga ut</button>
                         }
                     </li>

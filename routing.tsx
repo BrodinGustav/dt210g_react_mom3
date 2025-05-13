@@ -34,7 +34,7 @@ const router = createBrowserRouter([
             {    path: "*",    
                 element: <ErrorPage />  
             },
-            {    path: "//blogg/:id",    
+            {    path: "/blogg/:id",    
                 element: <BlogPostDetail />  
             }
 

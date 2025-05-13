@@ -1,6 +1,6 @@
 
 import Header from "./Header"
-import { useLocation, Outlet } from "react-router-dom"   //Används för att rendera barnkomponenter
+import { useLocation, Outlet } from "react-router-dom"   //Används för att rendera barnkomponenter, samt för att hantera header beroende på vy
 import '../../src/App.css'
 import '../../src/index.css'
 
@@ -9,7 +9,7 @@ export default function AppLayout()
 const location = useLocation();
 const hideHeaderOn = ["/login"];
 
-const shouldHideHeader = hideHeaderOn.includes(location.pathname);
+const shouldHideHeader = hideHeaderOn.includes(location.pathname);  //Döljer headern för /login
 
 
 
