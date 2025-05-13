@@ -48,6 +48,7 @@ const AdminPage = () => {
         setPosts(data);
     };
 
+    //Hanterar alla inputfält via name-attributet
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
 
@@ -55,7 +56,7 @@ const AdminPage = () => {
         setErrors(prev => ({ ...prev, [name]: "" }));
     };
 
-    //Metod för att generera unikt, ensiffrigt ID
+    //Tar de första fyra tecknen från ID:t (används som förenklat ID i gränssnittet)
     const generateShortId = (id: string) => id.slice(0, 4);
 
 

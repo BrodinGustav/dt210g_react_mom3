@@ -4,37 +4,50 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from 'react-router-dom';
 import '../../src/App.css'
 import '../../src/index.css'
+
 const LoginPage = () => {
 
-    //States för inputfält och error
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+
+    //State för inmatade värden (email och lösenord)
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+    });
+
+    //State för eventuella felmeddelanden vid inloggning
     const [error, setError] = useState('');
 
-    const {login, user} = useAuth();
+    //Tar in login-funktionen och aktuell användare från AuthContext
+    const { login, user } = useAuth();
+  
     const navigate = useNavigate();
 
     //Kontrollerar användare
     useEffect(() => {
-        if(user) {
+        if (user) {
             navigate("/admin");
         }
     }, [])
 
+    //Uppdaterar formData dynamiskt baserat på fältnamnet (name)
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
 
-    //Nollställer error-state och förhindrar sidan från att laddas om
+    //Hanterar formulärets inlämning
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError('');
 
-        try{
+        try {
 
-            await login({email, password}); 
+            await login({ email: formData.email, password: formData.password });
             localStorage.getItem("token");
 
             navigate("/admin");
 
-        } catch(error) {
+        } catch (error) {
             setError("Inloggninge misslyckades, kontrollera email och lösenord.");
         }
     };
@@ -47,7 +60,7 @@ const LoginPage = () => {
 
             </div>
 
-            
+
             <form onSubmit={handleSubmit}>
                 {error && (
                     <div className="error-message">
@@ -61,8 +74,8 @@ const LoginPage = () => {
                         id="email"
                         type="email"
                         required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}  //Eventlyssnare som ändrar state för inputfält vid uppdatering
+                        value={formData.email}
+                        onChange={handleChange}
                     />
                 </div>
 
@@ -72,22 +85,22 @@ const LoginPage = () => {
                         id="password"
                         type="password"
                         required
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)} //Eventlyssnare som ändrar state för inputfält vid uppdatering
+                        value={formData.password}
+                        onChange={handleChange}
                     />
-                    </div>
+                </div>
 
-                    <button
+                <button
                     type="submit"
                 >
                     Logga in
-                    </button>
-                    </form>    
-                    </div>
-                    
-                )
-            }
-        
+                </button>
+            </form>
+        </div>
+
+    )
+}
 
 
-                export default LoginPage 
+
+export default LoginPage 
