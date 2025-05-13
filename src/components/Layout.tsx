@@ -1,23 +1,30 @@
 
 import Header from "./Header"
-import { Outlet } from "react-router-dom"   //Används för att rendera barnkomponenter
+import { useLocation, Outlet } from "react-router-dom"   //Används för att rendera barnkomponenter
 import '../../src/App.css'
 import '../../src/index.css'
 
-const Layout = () => {
+export default function AppLayout()
+{
+const location = useLocation();
+const hideHeaderOn = ["/login"];
+
+const shouldHideHeader = hideHeaderOn.includes(location.pathname);
+
+
+
     return (
         <>
         <div>
-            <Header />
+            {!shouldHideHeader &&  <Header />}
             </div>
             
             <main>
                  <Outlet />                 {/*Renderar barnkomponenter*/}
             </main>
 
-            <footer>Sidfoten</footer>
+            <footer>DT210G Moment3 Gustav Brodin</footer>
         </>
     )
 }
 
-export default Layout

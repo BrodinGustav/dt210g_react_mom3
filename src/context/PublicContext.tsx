@@ -1,20 +1,16 @@
-import { useState } from "react";
 import { BloggPost } from "../types/public.types";
 
-
- const [loading, setLoading] = useState(true);
  
 //Hämta poster
 export const fetchPost = async () => {
 
 
+    
     try {
         
-        if (loading) {
-        return <p>Laddar...</p>;
-    }
+        //const res = await fetch("https://dt210g-mom3-backend-1.onrender.com/api/blogg", { BYT TILLBAKA SEN
 
-        const res = await fetch("https://dt210g-mom3-backend-1.onrender.com/api/blogg", {
+                    const res = await fetch("http://localhost:5000/api/blogg", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
@@ -32,10 +28,7 @@ export const fetchPost = async () => {
         console.error("Fel vid hämtning av blogginlägg:", error);
         return [];
     }
-     finally {
-                setLoading(false);
-            }
-
+    
 }
 
 

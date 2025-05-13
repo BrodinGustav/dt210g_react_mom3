@@ -9,7 +9,6 @@ const Header = () => {
         <header>
             <nav>
                 <ul>
-                    <li><NavLink to="/admin">Admin</NavLink></li>
                     <li>
                         {
                             !user ?  <NavLink to="/login">Logga in</NavLink> : <button onClick={logout}>Logga ut</button>

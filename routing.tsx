@@ -8,9 +8,6 @@ import ErrorPage from "./src/pages/ErrorPage"
 import ProtectedRoute from "./src/components/ProtectedRoute";
 import BlogPostDetail from "./src/components/BloggPostDetail";
 
-
-
-
 //Konfigurera routes
 const router = createBrowserRouter([
     {
