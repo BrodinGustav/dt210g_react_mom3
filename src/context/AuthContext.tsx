@@ -35,9 +35,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {    
 
     
         try {
-        //    const res = await fetch("https://dt210g-mom3-backend-1.onrender.com/api/auth/login/", {  //Om ok inlogg genereras token som skickas till klienten ÄNDRA TILLBAKA 
+            const res = await fetch("https://dt210g-mom3-backend-1.onrender.com/api/auth/login/", {  //Om ok inlogg genereras token som skickas till klienten  
 
-            const res = await fetch("http://localhost:5000/api/auth/login", {  //Om ok inlogg genereras token som skickas till klienten
+           // const res = await fetch("http://localhost:5000/api/auth/login", {  //Om ok inlogg genereras token som skickas till klienten
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
