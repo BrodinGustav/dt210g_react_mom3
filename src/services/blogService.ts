@@ -44,6 +44,7 @@ export const deletePost = async (postId: string) => {
         throw new Error("Ingen token hittades, användaren är inte inloggad.");
     }
 
+    /*
     const response = await fetch(`http://localhost:5000/api/blogg/${postId}`, {
             method: "DELETE",
         headers: {
@@ -51,16 +52,16 @@ export const deletePost = async (postId: string) => {
             "Authorization": `Bearer ${token}`
         },
     });
-
-    /*
-    const response = await fetch(`https://dt210g-mom3-backend-1.onrender.com/api/blogg/${postId}`, {    BYT TILLBAKA NÄR KLAR
+*/
+  
+    const response = await fetch(`https://dt210g-mom3-backend-1.onrender.com/api/blogg/${postId}`, {    
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
         },
     });
-    */
+  
 
     if (!response.ok) {
         throw new Error("Fel vid radering av inlägg.");
@@ -78,7 +79,7 @@ export const updatePost = async (id: string, updatedPostData: { title?: string; 
         throw new Error("Ingen token hittades, användaren är inte inloggad.");
     }
 
-
+/*
      const response = await fetch(`http://localhost:5000/api/blogg/${id}`, {
             method: "PUT",
         headers: {
@@ -87,9 +88,9 @@ export const updatePost = async (id: string, updatedPostData: { title?: string; 
         },
          body: JSON.stringify(updatedPostData)
     });
-
-    /*
-    const response = await fetch(`https://dt210g-mom3-backend-1.onrender.com/api/blogg/${id}`, {    BYT TILLBAKA NÄR KLAR
+*/
+    
+    const response = await fetch(`https://dt210g-mom3-backend-1.onrender.com/api/blogg/${id}`, {    
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -97,7 +98,7 @@ export const updatePost = async (id: string, updatedPostData: { title?: string; 
         },
         body: JSON.stringify(updatedPostData)
     });
-*/
+
 
     if (!response.ok) {
         throw new Error("Fel vid uppdatering av inlägg.");

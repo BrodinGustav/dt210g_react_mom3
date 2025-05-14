@@ -6,7 +6,6 @@ import '../../src/App.css'
 import { Link } from 'react-router-dom';
 import Loader from "../components/Loader";
 import { formatDate } from "../utils/formateDate";
-import Header from "../components/Header";
 
 const AdminPage = () => {
 

@@ -15,17 +15,25 @@ const BlogPostDetail = () => {
         const fetchBlogPost = async () => {
             try {
 
-                      const response = await fetch(`http://localhost:5000/api/blogg/${id}`);
+                  const token = localStorage.getItem('token');
 
-                //Fixa tillbaka när uppgift är klar!
-    /*const response = await fetch(`https://dt210g-mom3-backend-1.onrender.com/api/blogg/${id}`, {
+                if (!token) {
+                    console.error('Ingen token funnen!');
+                    return;
+                }
+                
+                    /*
+                      const response = await fetch(`http://localhost:5000/api/blogg/${id}`);
+                    */
+                
+    const response = await fetch(`https://dt210g-mom3-backend-1.onrender.com/api/blogg/${id}`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`, // Skicka token här
             'Content-Type': 'application/json',
         },
     });
-*/
+
     if (response.ok) {
         const data: BloggPost = await response.json();
 
