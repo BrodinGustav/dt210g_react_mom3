@@ -4,6 +4,7 @@ import './index.css'
 import { RouterProvider } from 'react-router-dom' //Importerar router med RouterProvider
 import router from '../routing.tsx'               //Hämtar routing från routing.tsx
 import { AuthProvider } from './context/AuthContext.tsx';
+import './index.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

@@ -1,9 +1,10 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import '../../src/App.css'
 import '../../src/index.css'
+import Loader from "../components/Loader";
 
 const LoginPage = () => {
 
@@ -16,10 +17,13 @@ const LoginPage = () => {
 
     //State för eventuella felmeddelanden vid inloggning
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);              //Laddar vid hämtning av data
+
+
 
     //Tar in login-funktionen och aktuell användare från AuthContext
     const { login, user } = useAuth();
-  
+
     const navigate = useNavigate();
 
     //Kontrollerar användare
@@ -31,14 +35,15 @@ const LoginPage = () => {
 
     //Uppdaterar formData dynamiskt baserat på fältnamnet (name)
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        const { id, value } = e.target;
+        setFormData(prev => ({ ...prev, [id]: value }));
     };
 
     //Hanterar formulärets inlämning
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError('');
+        setLoading(true);
 
         try {
 
@@ -49,8 +54,17 @@ const LoginPage = () => {
 
         } catch (error) {
             setError("Inloggninge misslyckades, kontrollera email och lösenord.");
-        }
+        
+         } finally {
+        setLoading(false);
+         }
     };
+
+
+
+    if (loading) {
+    return <Loader />;
+}
 
 
     return (
@@ -96,6 +110,9 @@ const LoginPage = () => {
                     Logga in
                 </button>
             </form>
+            <div className="link">
+                <NavLink to="/">Tillbaka till startsidan</NavLink>
+            </div>
         </div>
 
     )

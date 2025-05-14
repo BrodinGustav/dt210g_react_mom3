@@ -4,7 +4,9 @@ import { fetchPost } from "../context/PublicContext";
 import { BloggPost } from "../types/public.types";
 import '../../src/App.css'
 import { Link } from 'react-router-dom';
-
+import Loader from "../components/Loader";
+import { formatDate } from "../utils/formateDate";
+import Header from "../components/Header";
 
 const AdminPage = () => {
 
@@ -13,7 +15,7 @@ const AdminPage = () => {
 
     //Hämtar blogginlägg från server
     const [posts, setPosts] = useState<BloggPost[]>([]);        //Lagrar data med useState
-
+     const [loading, setLoading] = useState(true);              //Laddar vid hämtning av data
 
     //State för att lagra inputvärden
     const [formData, setFormData] = useState({
@@ -35,6 +37,8 @@ const AdminPage = () => {
         postDeleteId: ""
     });
 
+    const [successMessage, setSuccessMessage] = useState("");
+
 
     //Laddar in data från backend vid start av sida med useEffect
     useEffect(() => {
@@ -44,8 +48,18 @@ const AdminPage = () => {
 
     //Deklararerar getPosts utanför useEffect för att kunna anropa den efter varje CRUD (för att uppdatera lista på fronten)
     const getPosts = async () => {
+         setLoading(true);
+     
+         try {
         const data = await fetchPost();
         setPosts(data);
+     
+    } catch (error) {
+        console.error("Fel vid hämtning:", error);
+    
+    } finally {
+        setLoading(false); 
+    }
     };
 
     //Hanterar alla inputfält via name-attributet
@@ -86,6 +100,8 @@ const AdminPage = () => {
                 console.log("Inlägg skapat:", newPost);
                 getPosts();
                 setFormData(prev => ({ ...prev, title: "", description: "" }));
+                setSuccessMessage("Inlägget har skapats!");
+                setLoading(false);
             } catch (error) {
                 console.error("Fel vid skapande av inlägg:", error);
             }
@@ -122,7 +138,7 @@ const handleUpdatePost = async () => {
   if (valid) {
             const postToUpdate = posts.find(post => generateShortId(post._id) === formData.postId);
             if (!postToUpdate) {
-                console.error("Inget inlägg hittades med detta ID");
+             setErrors(prev => ({ ...prev, postId: "Inget inlägg hittades med detta ID" }));
                 return;
             }
 
@@ -132,6 +148,7 @@ const handleUpdatePost = async () => {
                     description: formData.updateDescription
                 });
                 console.log("Inlägg uppdaterat:", updatedPost);
+                setSuccessMessage("Inlägget har uppdaterats!");
                 getPosts();
                 setFormData(prev => ({
                     ...prev,
@@ -161,12 +178,13 @@ const handleDeletePost = async () => {
      if (valid) {
             const postToDelete = posts.find(post => generateShortId(post._id) === formData.postDeleteId);
             if (!postToDelete) {
-                console.error("Inlägg ej hittat, kan ej radera.");
+               setErrors(prev => ({ ...prev, postDeleteId: "Inget inlägg hittades med detta ID" }));
                 return;
             }
    try {
                 const deletedPost = await deletePost(postToDelete._id);
                 console.log("Inlägg raderat:", deletedPost);
+                setSuccessMessage("Inlägget har raderats!");
                 getPosts();
                 setFormData(prev => ({ ...prev, postDeleteId: "" }));
             } catch (error) {
@@ -176,18 +194,26 @@ const handleDeletePost = async () => {
     };
 
 
+
+    if (loading) {
+    return <Loader />;
+}
+
+
 return (
     <>
+
         <h1>Adminpanel</h1>
         <h2>Välkommen {user ? user.firstName : "Admin"}</h2>
 
-
+    <div className="formWrapper">
         <div>
+             {successMessage && <p className="success">{successMessage}</p>}
             <h3>Skapa inlägg</h3>
-            <input type="text" placeholder="Titel" value={formData.title}  onChange={handleChange}/>
+            <input type="text"  name="title" placeholder="Titel" value={formData.title}  onChange={handleChange}/>
             {errors.title && <p className="error">{errors.title}</p>}
 
-            <textarea placeholder="Beskrivning" value={formData.description} onChange={handleChange} />
+            <textarea name="description" placeholder="Beskrivning" value={formData.description} onChange={handleChange} />
 
             {errors.description && <p className="error">{errors.description}</p>}
             
@@ -199,15 +225,15 @@ return (
   {/* Uppdatera inlägg */}
         <div>
             <h3>Uppdatera inlägg</h3>
-            <input type="text" placeholder="Inläggs-ID" value={formData.postId} onChange={handleChange} />
+            <input type="text" name="postId" placeholder="Inläggs-ID" value={formData.postId} onChange={handleChange} />
 
             {errors.postId && <p className="error">{errors.postId}</p>}
 
-            <input type="text" placeholder="Ny titel" value={formData.updateTitle} onChange={handleChange} />
+            <input type="text" name="updateTitle" placeholder="Ny titel" value={formData.updateTitle} onChange={handleChange} />
 
             {errors.updateTitle && <p className="error">{errors.updateTitle}</p>}
 
-            <textarea placeholder="Ny beskrivning" value={formData.updateDescription} onChange={handleChange}/>
+            <textarea name="updateDescription" placeholder="Ny beskrivning" value={formData.updateDescription} onChange={handleChange}/>
 
             {errors.updateDescription && <p className="error">{errors.updateDescription}</p>}
 
@@ -216,17 +242,18 @@ return (
 
         <div>
             <h3>Radera inlägg</h3>
-            <input type="text" placeholder="Inläggs-ID" value={formData.postDeleteId} onChange={handleChange} />
+            <input type="text" name="postDeleteId" placeholder="Inläggs-ID" value={formData.postDeleteId} onChange={handleChange} />
 
             {errors.postDeleteId && <p className="error">{errors.postDeleteId}</p>}
 
             <button onClick={handleDeletePost}>Radera</button>
-
+        </div>
         </div>
 
         <div>
             <h3>Blogginlägg</h3>
 
+        <div className="bloggPostWrapper">
             <ul>
                 {posts.map((post) => (
                     <li key={post._id}>
@@ -234,13 +261,14 @@ return (
                         <p>ID: {generateShortId(post._id)}</p>
                         <p>{post.description}</p>
                         <p><strong>Författare:</strong> {post.author?.firstName || "Okänd"}</p>
-                        <p>Skapad: {post.createdAt}</p>
+                        <p>Skapad: {formatDate(post.createdAt)}</p>
                         <Link to={`/blogg/${post._id}`}>
                             <button>Visa detaljer</button>
                         </Link>
                     </li>
                 ))}
             </ul>
+            </div>
         </div>
 
     </>

@@ -7,7 +7,8 @@ export const createPost = async (postData: { title: string, description: string}
         throw new Error("Ingen token hittades, användaren är inte inloggad.");
     }
 
-    const response = await fetch("https://dt210g-mom3-backend-1.onrender.com/api/blogg", {
+    const response = await fetch("http://localhost:5000/api/blogg/",
+        {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -15,6 +16,18 @@ export const createPost = async (postData: { title: string, description: string}
         },
         body: JSON.stringify(postData)
     });
+
+    /*
+    const response = await fetch("https://dt210g-mom3-backend-1.onrender.com/api/blogg", {  BYT TILLBAKA NÄR KLAR
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(postData)
+    });
+   */
+
     if (!response.ok) {
         throw new Error("Fel vid skapande av inlägg.");
     }
@@ -31,13 +44,24 @@ export const deletePost = async (postId: string) => {
         throw new Error("Ingen token hittades, användaren är inte inloggad.");
     }
 
-    const response = await fetch(`https://dt210g-mom3-backend-1.onrender.com/api/blogg/${postId}`, {
+    const response = await fetch(`http://localhost:5000/api/blogg/${postId}`, {
+            method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+    });
+
+    /*
+    const response = await fetch(`https://dt210g-mom3-backend-1.onrender.com/api/blogg/${postId}`, {    BYT TILLBAKA NÄR KLAR
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
         },
     });
+    */
+
     if (!response.ok) {
         throw new Error("Fel vid radering av inlägg.");
     }
@@ -55,7 +79,17 @@ export const updatePost = async (id: string, updatedPostData: { title?: string; 
     }
 
 
-    const response = await fetch(`https://dt210g-mom3-backend-1.onrender.com/api/blogg/${id}`, {
+     const response = await fetch(`http://localhost:5000/api/blogg/${id}`, {
+            method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+         body: JSON.stringify(updatedPostData)
+    });
+
+    /*
+    const response = await fetch(`https://dt210g-mom3-backend-1.onrender.com/api/blogg/${id}`, {    BYT TILLBAKA NÄR KLAR
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -63,6 +97,8 @@ export const updatePost = async (id: string, updatedPostData: { title?: string; 
         },
         body: JSON.stringify(updatedPostData)
     });
+*/
+
     if (!response.ok) {
         throw new Error("Fel vid uppdatering av inlägg.");
     }

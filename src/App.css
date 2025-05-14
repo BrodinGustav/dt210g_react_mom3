@@ -1,6 +1,5 @@
 body {
     font-family: Arial, sans-serif;
-    /*background: linear-gradient(to right, #28ff90, #66ff00);*/
     color: #333;
     margin: 0;
     padding: 0;
@@ -21,6 +20,7 @@ body {
     background-color:aliceblue;
     box-shadow: 1px 1px 10px black;
     padding:1em;
+    margin-top:3em;
 }
 
 .login-box {
@@ -63,79 +63,3 @@ button:hover {
 
 
 
-
-/* MEDIA QUERIES */
-
-/* min 768px bredd */
-@media (min-width: 768px) {
-    .login-container {
-        width: 30em;
-        padding: 15px;
-    }
-    
-    nav{
-        width:20em;    
-        display: flex;
-        align-items: center;
-        margin:0 auto;    
-    }
-
-  input, select,textarea, button {
-        width: 30em; 
-    }
-    
-    li {
-        padding: 10px;
-        width:30em;
-        text-align: center;
-    }
-    
-}
-
-
-/* max 768px bredd */
-@media (max-width: 768px) {
-
-    .login-container {
-        width: 95%;
-        padding: 15px;
-    }
-
-    input, select,textarea, button {
-        width: 20em; 
-    }
-    
-    li {
-        flex-direction: column; 
-        text-align: left;
-        padding: 15px;
-    }
-    
-   nav button { 
-        margin-bottom: 1em;
-        width:10em;
-        display: flex;
-        margin:0 auto;
-    }
-}
-
-/* max 480px bredd */
-@media (max-width: 480px) {
-    body {
-        padding: 5px;
-    }
-    
-    .login-container {
-        padding: 10px;
-        width: 100%;
-    }
-
-    input, select,textarea, button {
-        width: 60%; 
-    }
-    
-    li {
-        padding: 10px;
-        text-align: center;
-    }
-}
