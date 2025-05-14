@@ -81,9 +81,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {    
 
         try {
 
-         //   const res = await fetch("https://dt210g-mom3-backend-1.onrender.com/api/validate", { FIXA TILLBAKA
+            const res = await fetch("https://dt210g-mom3-backend-1.onrender.com/api/validate", { 
 
-                 const res = await fetch("http://localhost:5000/api/validate", { 
+           //      const res = await fetch("http://localhost:5000/api/validate", { 
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

@@ -8,9 +8,9 @@ export const fetchPost = async () => {
     
     try {
         
-        //const res = await fetch("https://dt210g-mom3-backend-1.onrender.com/api/blogg", { BYT TILLBAKA SEN
+        const res = await fetch("https://dt210g-mom3-backend-1.onrender.com/api/blogg", {
 
-                    const res = await fetch("http://localhost:5000/api/blogg", {
+                   // const res = await fetch("http://localhost:5000/api/blogg", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"

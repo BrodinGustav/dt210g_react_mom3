@@ -10,7 +10,7 @@ const Header = () => {
         <header className="header">
             <div className="logo">
                 <NavLink to="/">
-                    <img src="/public/blogger-brands.svg" alt="Logotyp" className="logo-img" />
+                    <img src="/blogger-brands.svg" alt="Logotyp" className="logo-img" />
                 </NavLink>
             </div>
             <nav className="nav-menu">
