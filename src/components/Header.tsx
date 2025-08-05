@@ -13,6 +13,15 @@ const Header = () => {
                     <img src="/blogger-brands.svg" alt="Logotyp" className="logo-img" />
                 </NavLink>
             </div>
+
+
+            {/* Meny-knapp för mobil */}
+            <input type="checkbox" id="menu-toggle" className="menu-toggle" />
+            <label htmlFor="menu-toggle" className="menu-icon">&#9776;
+                <span className="open">&#9776;</span> {/* ☰ */}
+                <span className="close">&times;</span> {/* ✖ */}
+            </label>
+
             <nav className="nav-menu">
                 <ul>
                     <li><NavLink to="/">Startsida</NavLink></li>
@@ -21,7 +30,7 @@ const Header = () => {
                             !user ? <NavLink to="/login">Logga in</NavLink> : <button className="logoutBtn" onClick={logout}>Logga ut</button>
                         }
                     </li>
-                     {user && (
+                    {user && (
                         <li>
                             <NavLink to="/admin">Admin</NavLink>
                         </li>

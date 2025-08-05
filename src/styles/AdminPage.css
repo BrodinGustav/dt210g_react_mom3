@@ -11,7 +11,6 @@
 }
 
 .formWrapper > div {
-    flex: 1 1 300px;
     padding: 20px;
     border: 1px solid #ccc;
     background-color: #fafafa;
@@ -22,7 +21,7 @@
 /* Inputs och textarea */
 input[type="text"],
 textarea {
-    width: 100%;
+    width: 90%;
     padding: 10px;
     margin-top: 6px;
     margin-bottom: 10px;
