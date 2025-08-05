@@ -17,7 +17,7 @@ const Header = () => {
 
             {/* Meny-knapp för mobil */}
             <input type="checkbox" id="menu-toggle" className="menu-toggle" />
-            <label htmlFor="menu-toggle" className="menu-icon">&#9776;
+            <label htmlFor="menu-toggle">
                 <span className="open">&#9776;</span> {/* ☰ */}
                 <span className="close">&times;</span> {/* ✖ */}
             </label>
