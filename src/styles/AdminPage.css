@@ -43,6 +43,7 @@ textarea {
 .bloggPostWrapper ul {
     list-style: none;
     padding: 0;
+    width:90%;
 }
 
 .bloggPostWrapper li {

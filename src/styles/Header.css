@@ -113,8 +113,7 @@ li {
     display: inline;
     z-index: 2;
     position: absolute;
-    left: 0;
-    right: 0;
+    left: 1.5em;
     font-size: 2em;
   }
 
