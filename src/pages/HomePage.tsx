@@ -4,6 +4,7 @@ import { BloggPost } from "../types/public.types";
 import { Link } from 'react-router-dom';
 import Loader from "../components/Loader";
 import { formatDate } from "../utils/formateDate";
+import "../styles/HomePage.css";
 
 const HomePage = () => {
 

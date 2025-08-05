@@ -1,0 +1,26 @@
+/* Lista med inlägg */
+ul {
+    list-style: none;
+    padding: 0;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.latestPosts {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.latestPosts h3 {
+    margin-top: 0;
+    color: #3f51b5;
+}
+
+.latestPosts p {
+    margin: 8px 0;
+    line-height: 1.4;
+}

@@ -6,6 +6,8 @@ import '../../src/App.css'
 import { Link } from 'react-router-dom';
 import Loader from "../components/Loader";
 import { formatDate } from "../utils/formateDate";
+import "../styles/AdminPage.css";
+
 
 const AdminPage = () => {
 
@@ -208,6 +210,8 @@ return (
     <div className="formWrapper">
         <div>
              {successMessage && <p className="success">{successMessage}</p>}
+
+               {/* Skapa inlägg */}
             <h3>Skapa inlägg</h3>
             <input type="text"  name="title" placeholder="Titel" value={formData.title}  onChange={handleChange}/>
             {errors.title && <p className="error">{errors.title}</p>}
@@ -239,6 +243,7 @@ return (
             <button onClick={handleUpdatePost}>Uppdatera</button>
         </div>
 
+  {/* Radera inlägg */}
         <div>
             <h3>Radera inlägg</h3>
             <input type="text" name="postDeleteId" placeholder="Inläggs-ID" value={formData.postDeleteId} onChange={handleChange} />
@@ -249,6 +254,7 @@ return (
         </div>
         </div>
 
+  {/* Utskrift inlägg */}
         <div>
             <h3>Blogginlägg</h3>
 
@@ -261,6 +267,8 @@ return (
                         <p>{post.description}</p>
                         <p><strong>Författare:</strong> {post.author?.firstName || "Okänd"}</p>
                         <p>Skapad: {formatDate(post.createdAt)}</p>
+                        
+                          {/* Visa detaljer-knapp */}
                         <Link to={`/blogg/${post._id}`}>
                             <button>Visa detaljer</button>
                         </Link>
