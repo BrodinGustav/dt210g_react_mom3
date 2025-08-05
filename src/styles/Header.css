@@ -79,9 +79,15 @@ li {
 
 .menu-icon {
   display: none;
-  font-size: 28px;
+  font-size: 2em;
   cursor: pointer;
   color: white;
+  z-index: 999;
+  position: relative;
+}
+
+.menu-icon span {
+  display: none;
 }
 
 /* MEDIA QUERIES */
@@ -114,11 +120,15 @@ li {
     display: inline;
   }
 
+  .menu-toggle:checked+.menu-icon .open {
+    display: none;
+  }
+
   .menu-toggle:checked+.menu-icon .close {
     display: inline;
     z-index: 2;
     position: absolute;
-     left: 0;
+    left: 0;
     right: 0;
     font-size: 2em;
   }
