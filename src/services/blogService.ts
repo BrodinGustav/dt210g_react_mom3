@@ -7,6 +7,7 @@ export const createPost = async (postData: { title: string, description: string}
         throw new Error("Ingen token hittades, användaren är inte inloggad.");
     }
 
+    /*
     const response = await fetch("http://localhost:5000/api/blogg/",
         {
         method: "POST",
@@ -16,9 +17,9 @@ export const createPost = async (postData: { title: string, description: string}
         },
         body: JSON.stringify(postData)
     });
-
-    /*
-    const response = await fetch("https://dt210g-mom3-backend-1.onrender.com/api/blogg", {  BYT TILLBAKA NÄR KLAR
+*/
+    
+    const response = await fetch("https://dt210g-mom3-backend-1.onrender.com/api/blogg", {  
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -26,7 +27,7 @@ export const createPost = async (postData: { title: string, description: string}
         },
         body: JSON.stringify(postData)
     });
-   */
+   
 
     if (!response.ok) {
         throw new Error("Fel vid skapande av inlägg.");

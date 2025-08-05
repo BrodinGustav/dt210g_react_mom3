@@ -21,6 +21,11 @@ const Header = () => {
                             !user ? <NavLink to="/login">Logga in</NavLink> : <button className="logoutBtn" onClick={logout}>Logga ut</button>
                         }
                     </li>
+                     {user && (
+                        <li>
+                            <NavLink to="/admin">Admin</NavLink>
+                        </li>
+                    )}
                 </ul>
             </nav>
         </header>
