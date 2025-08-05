@@ -77,7 +77,7 @@ const LoginPage = () => {
 
             <form onSubmit={handleSubmit}>
                 {error && (
-                    <div className="error-message">
+                    <div className="error">
                         {error}
                     </div>
                 )}
