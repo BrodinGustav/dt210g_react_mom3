@@ -86,28 +86,13 @@ li {
   position: relative;
 }
 
-.menu-icon span {
+.menu-icon .open,
+.menu-icon .close {
   display: none;
+  color: white;
 }
 
 /* MEDIA QUERIES */
-
-/*min 768px bredd */
-@media (min-width: 768px) {
-
-  header {
-    width: 100%;
-  }
-
-  .nav-menu ul {
-    width: 15em;
-  }
-
-  li {
-    width: 30em;
-  }
-
-}
 
 /* max 768px bredd */
 @media (max-width: 768px) {
@@ -162,6 +147,25 @@ li {
 
   .logo-img {
     margin-right: 0.2em;
+  }
+
+
+
+  /*min 768px bredd */
+  @media (min-width: 768px) {
+
+    header {
+      width: 100%;
+    }
+
+    .nav-menu ul {
+      width: 15em;
+    }
+
+    li {
+      width: 30em;
+    }
+
   }
 
 }
